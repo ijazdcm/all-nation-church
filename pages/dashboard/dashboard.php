@@ -36,7 +36,7 @@
              <div class="icon">
                <i class="ion ion-person-add"></i>
              </div>
-             <a href="MainDashboard.php?status=add_believer" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+             <a href="\church/MainDashboard.php?status=add_believer" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
            </div>
          </div>
          <!-- ./col -->
@@ -53,7 +53,7 @@
              <div class="icon">
                <i class="ion ion-stats-bars"></i>
              </div>
-             <a href="pages/viewBelieversCrud/index.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+             <a href="\church/pages/viewBelieversCrud/index.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
            </div>
          </div>
          <!-- ./col -->
@@ -71,7 +71,7 @@
              <div class="icon">
                <i class="ion ion-pie-graph"></i>
              </div>
-             <a href="pages\Reportss\Report.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+             <a href="\church/pages/Reportss/Report.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
            </div>
          </div>
          <!-- ./col -->
@@ -90,7 +90,7 @@
              <div class="icon">
                <i class="fas fa-cloud-download-alt"></i>
              </div>
-             <a href="pages\back_up\back_up.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+             <a href="./pages/back_up/back_up.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
            </div>
          </div>
          <!-- ./col -->
@@ -101,44 +101,51 @@
        </div>
        <!-- /.row -->
 
-     </div><!-- /.container-fluid -->
+       <div class='row'>
+         <div class='col-md-4'>
+           <?php foreach ($notifications as $row) : ?>
+             <div class="alert alert-primary mb-3 pt-4 pb-4" href="#"><?php echo $row; ?></div>
+           <?php endforeach; ?>
+         </div>
+       </div>
+       <!-- /.container-fluid -->
 
 
 
-     <!-- <?php
+       <!-- <?php
 
-          $dataPoints = array();
-          //Best practice is to create a separate file for handling connection to database
-          try {
-            // Creating a new connection.
-            // Replace your-hostname, your-db, your-username, your-password according to your database
-            $link = new \PDO(
-              //  'mysql:host=your-hostname;dbname=your-db;charset=utf8mb4',
-              'mysql:host=localhost;dbname=prayer;charset=utf8mb4',
-              // 'your-username',
-              'root',
-              // 'your-password',
-              '',
-              array(
-                \PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                \PDO::ATTR_PERSISTENT => false
-              )
-            );
+            $dataPoints = array();
+            //Best practice is to create a separate file for handling connection to database
+            try {
+              // Creating a new connection.
+              // Replace your-hostname, your-db, your-username, your-password according to your database
+              $link = new \PDO(
+                //  'mysql:host=your-hostname;dbname=your-db;charset=utf8mb4',
+                'mysql:host=localhost;dbname=prayer;charset=utf8mb4',
+                // 'your-username',
+                'root',
+                // 'your-password',
+                '',
+                array(
+                  \PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                  \PDO::ATTR_PERSISTENT => false
+                )
+              );
 
-            $handle = $link->prepare('select x, y from believer');
-            $handle->execute();
-            $result = $handle->fetchAll(\PDO::FETCH_OBJ);
+              $handle = $link->prepare('select x, y from believer');
+              $handle->execute();
+              $result = $handle->fetchAll(\PDO::FETCH_OBJ);
 
-            foreach ($result as $row) {
-              array_push($dataPoints, array("x" => $row->x, "y" => $row->y));
+              foreach ($result as $row) {
+                array_push($dataPoints, array("x" => $row->x, "y" => $row->y));
+              }
+              $link = null;
+            } catch (\PDOException $ex) {
+              print($ex->getMessage());
             }
-            $link = null;
-          } catch (\PDOException $ex) {
-            print($ex->getMessage());
-          }
 
-          ?> -->
-     <!-- <!DOCTYPE HTML>
+            ?> -->
+       <!-- <!DOCTYPE HTML>
 <html>
 <head>
 <script>

@@ -47,9 +47,9 @@
       </ul>
 
       <!-- Right navbar links -->
-      <ul class="navbar-nav ml-auto">
-        <!-- Navbar Search -->
-        <li class="nav-item">
+      <!-- <ul class="navbar-nav ml-auto"> -->
+      <!-- Navbar Search -->
+      <!-- <li class="nav-item">
           <a class="nav-link" data-widget="navbar-search" href="#" role="button">
             <i class="fas fa-search"></i>
           </a>
@@ -68,18 +68,55 @@
               </div>
             </form>
           </div>
-        </li>
+        </li> -->
 
-        <!-- FULL SCREEN -->
-        <li class="nav-item">
-          <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-            <i class="fas fa-expand-arrows-alt"></i>
-          </a>
-        </li>
-        <li class="nav-item">
+      <!-- FULL SCREEN -->
+      <li class="nav-item">
+        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </a>
+      </li>
+      <!-- <li class="nav-item">
           <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
             <i class="fas fa-th-large"></i>
           </a>
+        </li> -->
+      <!-- </ul> -->
+      <?php
+      function number_suffix($number)
+      {
+        $ends = array('th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th');
+        if ((($number % 100) >= 11) && (($number % 100) <= 13)) {
+          return $number . 'th';
+        } else {
+          return $number . $ends[$number % 10];
+        }
+      }
+      $con = mysqli_connect("localhost", "root", "", "prayer");
+
+      $notifications = [];
+      $current_month_day = date("m-d");
+      $sql = "select * from believer where DATE_FORMAT(DOB, '%m-%d')='{$current_month_day}'";
+      $res = $con->query($sql);
+      if ($res->num_rows > 0) {
+        while ($row = $res->fetch_assoc()) {
+          $age = (date("Y") - date("Y", strtotime($row["DOB"]))) + 1;
+          $notifications[] = "<i class='fa fa-bell'></i> Wish <b>{$row["NAME"]}</b> a Happy Birthday!<br> This is <b>{$row["NAME"]}</b>'s " . number_suffix($age) . " Birthday. date of birth is <b>" . date("d-m-Y", strtotime($row["DOB"])) . "</b>";
+        }
+      }
+      ?>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <span class='fa fa-bell'></span>(<?php echo count($notifications); ?>)
+          </a>
+          <?php if (count($notifications) > 0) : ?>
+            <div class="dropdown-menu dropdown-menu-right p-2" aria-labelledby="navbarDropdown">
+              <?php foreach ($notifications as $row) : ?>
+                <a class="dropdown-item pt-3 pb-3 alert alert-success" href="#"><?php echo $row; ?></a>
+              <?php endforeach; ?>
+            </div>
+          <?php endif; ?>
         </li>
       </ul>
     </nav>
@@ -88,7 +125,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-light-primary  elevation-4">
       <!-- Brand Logo -->
-      <a href="MainDashboard.php?status=" class="brand-link">
+      <a href="\church/MainDashboard.php?status=" class="brand-link">
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <img src="./pages/img/logo-black.png" alt="AdminLTE Logo" style="opacity: .8; width:150px; height:120px;">
         <span class="brand-text font-weight-light"> </span>
       </a>
@@ -136,7 +173,7 @@
             </li>
 
             <li class="nav-item">
-              <a href="pages\add_believer\add_believer.php" class="nav-link">
+              <a href="<?php echo '?status=add_believer' ?>" class="nav-link">
                 <i class="fas fa-plus-square nav-icon"></i>
                 <p>
                   ADD BELIEVER
@@ -145,7 +182,7 @@
             </li>
 
             <li class="nav-item">
-              <a href="pages\viewBelieversCrud\index.php" class="nav-link">
+              <a href="./pages/viewBelieversCrud/index.php" class="nav-link">
                 <i class="fas fa-eye nav-icon"></i>
                 <p>
                   VIEW NEW COMER
@@ -153,7 +190,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="pages\viewChurchBelievercard\index.php" class="nav-link">
+              <a href="\church/pages/viewChurchBelievercard/index.php" class="nav-link">
                 <i class="fas fa-binoculars nav-icon"></i>
                 <p>
                   VIEW CHURCH MEMBER
@@ -172,13 +209,13 @@
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="pages\Reportss\Report.php" class="nav-link active">
+                  <a href="./pages/Reportss/Report.php" class="nav-link active">
                     <i class="fas fa-filter nav-icon"></i>
                     <p>REPORT FILTER</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="pages\Reportss\re.php" class="nav-link">
+                  <a href="./pages/Reportss/re.php" class="nav-link">
                     <i class="fas fa-arrow-circle-down nav-icon"></i>
                     <p>REPORT DOWNLOAD</p>
                   </a>
@@ -187,7 +224,7 @@
             </li>
 
             <li class="nav-item">
-              <a href="pages\back_up\back_up.php" class="nav-link">
+              <a href="./pages/back_up/back_up.php" class="nav-link">
                 <i class="fas fa-arrow-circle-down nav-icon"></i>
                 <p>
                   BACK-UP
@@ -196,7 +233,7 @@
             </li>
 
             <li class="nav-item align-text-bottom">
-              <a href="pages\logout\logout.php" class="nav-link">
+              <a href="./pages/logout/logout.php" class="nav-link">
                 <i class="fas fa-sign-out-alt nav-icon"></i>
                 <p>
                   LOGOUT
@@ -216,15 +253,15 @@
       // PHP SECTION FOR HANDLING REDIRECTION //
       @$chk = $_REQUEST["status"];
       if ($chk == "") {
-        include_once "pages\dashboard\dashboard.php";
+        include_once "./pages/dashboard/dashboard.php";
       } elseif ($chk == "add_believer") {
-        include_once "pages\add_believer\add_believer.php";
+        include_once "./pages/add_believer/add_believer.php";
       }
       //  elseif ($chk == "report") {
       //     include_once "./pages/Reportss/re.php";
       // }
       // elseif ($chk == "logout") {
-      //     include_once "pages\logout\logout.php";
+      //     include_once "./pages/logout/logout.php";
       // }
       // elseif ($chk == "logout") {
       //   include_once "./pages/logout.php";

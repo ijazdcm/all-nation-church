@@ -3,6 +3,8 @@
 include_once "../connection.php";
 
 session_start();
-if (session_destroy()) {
-  echo ("<script>window.location.href = 'index.php' </script>");
+if(session_destroy())
+{
+header("Location: \church/index.php");
 }
+?>
